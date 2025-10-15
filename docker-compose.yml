@@ -9,6 +9,7 @@ services:
       - POSTGRES_USER=${POSTGRES_USER_APP}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD_APP}
     volumes:
+      - ./tests:/app/tests
       - ../data:/app/data
     ports:
       - "${POSTGRES_PORT_APP:-5432}:5432"
