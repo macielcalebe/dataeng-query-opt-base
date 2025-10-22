@@ -11,6 +11,8 @@ services:
     volumes:
       - ./tests:/app/tests
       - ../data:/app/data
+      #- Descomentar caso queira persistir os dados do servidor
+      # - ./pg_data:/var/lib/postgresql/data
     ports:
       - "${POSTGRES_PORT_APP:-5432}:5432"
     healthcheck:
@@ -38,10 +40,11 @@ services:
       - postgres-app
     command: >
       bash -c "
+        echo 'Instalando dependencias...' &&
         pip install -r /app/requirements.txt &&
         echo 'Inicializando banco de dados...' &&
         python src/init_database.py &&
-        echo 'Inicializacao e carga de dados concluida. &&
-        tail -f /dev/null'
+        echo 'Inicializacao e carga de dados concluida.'
+        tail -f /dev/null
       "
     restart: no
